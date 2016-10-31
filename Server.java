@@ -6,35 +6,50 @@ public class Server {
 	
 	static Integer port = 10000;
 	static DatagramSocket socket;
+	static ServerSocket serverSocket;
 	static Socket clientSocket;
 	static String clientName;
+	static DatagramSocket socketUDP;
 	
 	public static void main(String... args) {
 		
-		clientName = args[0];
-		port = Integer.parseInt(args[1]);
+		// read server name, catch if there is no specified server
+		try {
+			clientName = args[0];
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// if a port is specified (optional), else default is port 10000
+		if (args.length > 1) {
+			port = Integer.parseInt(args[1]);
+		} 
 		
 		try {
 			// listen on specified port
-			ServerSocket serverSocket = new ServerSocket(port);
-			Socket clientSocket = serverSocket.accept();
+			serverSocket = new ServerSocket(port);
+			clientSocket = serverSocket.accept();
 
-			System.out.println("RTT for TCP 1 byte : " + sendBytesTCP(1));
-			System.out.println("RTT for TCP 10 bytes : " + sendBytesTCP(10));
-			System.out.println("RTT for TCP 100 bytes : " + sendBytesTCP(100));
-			System.out.println("RTT for TCP 1000 bytes : " + sendBytesTCP(1000));
-			System.out.println("RTT for TCP 10000 bytes : " + sendBytesTCP(10000));
+			acceptBytesTCP(1);
+			acceptBytesTCP(10);
+			acceptBytesTCP(100);
+			acceptBytesTCP(1000);
+			acceptBytesTCP(10000);
+			
+			serverSocket.close();
+			clientSocket.close();
 			
 			
-			DatagramSocket socketUDP = new DatagramSocket(port);
+			socketUDP = new DatagramSocket(port);
 			
-			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(1));
-			System.out.println("RTT for UDP 10 bytes : " + sendBytesUDP(10));
-			System.out.println("RTT for UDP 100 bytes : " + sendBytesUDP(100));
-			System.out.println("RTT for UDP 1000 bytes : " + sendBytesUDP(1000));
-			System.out.println("RTT for UDP 10000 bytes : " + sendBytesUDP(10000));			
+			acceptBytesUDP(1);
+			acceptBytesUDP(10);
+			acceptBytesUDP(100);
+			acceptBytesUDP(1000);
+			acceptBytesUDP(10000);
 			
-			
+			socketUDP.close();
 			
 			
 		} catch (IOException e) {
@@ -43,11 +58,21 @@ public class Server {
 		}
 	}
 	
-	public static long sendBytesTCP(int length) {
-		
-		long startTime = System.currentTimeMillis();
-		
+	public static void acceptBytesTCP(int length) {
+
 		try {
+			// accept sent bytes
+			final InputStream fromClient = clientSocket.getInputStream();
+		    final DataInputStream dis = new DataInputStream(fromClient);
+
+		    int len = dis.readInt();
+		    byte[] data = new byte[len];
+		    
+		    if (len > 0) {
+		        dis.read(data, 0, len);
+		    }
+		    
+		    // return the bytes to client
 			byte[] byteArray = new byte[length];
 			final OutputStream toClient = clientSocket.getOutputStream();
 	
@@ -58,80 +83,33 @@ public class Server {
 		        dos.write(byteArray, 0, length);
 		    }
 		    
-			final InputStream fromClient = clientSocket.getInputStream();
-		    final DataInputStream dis = new DataInputStream(fromClient);
-
-		    int len = dis.readInt();
-		    byte[] data = new byte[len];
-		    
-		    if (len > 0) {
-		        dis.read(data, 0, len);
-		    }
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		long endTime = System.currentTimeMillis();
-		
-		return endTime - startTime;
 	}
 	
 	
-	public static long sendBytesUDP(int length) {
-		long startTime = System.currentTimeMillis();
+	public static void acceptBytesUDP(int length) {
+
 		try {
-			byte[] byteArray = new byte[length];
-			DatagramPacket packet = new DatagramPacket(
-					byteArray, 0, byteArray.length, InetAddress.getByName(clientName), port);
-			socket.send(packet);
 			
 			byte[] data = new byte[length];
 			DatagramPacket receivePacket = new DatagramPacket(data, data.length);
 			socket.receive(receivePacket);
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		long endTime = System.currentTimeMillis();
-		
-		return endTime - startTime;
-	}
-	
-	public static long sendBytesToHostTCP(String host) {
-		
-		int length = 10;
-		long startTime = System.currentTimeMillis();
-		
-		try {
 			byte[] byteArray = new byte[length];
-			final OutputStream toClient = clientSocket.getOutputStream();
-	
-		    final DataOutputStream dos = new DataOutputStream(toClient);
-		    dos.writeInt(length);
-		    
-		    if (length > 0) {
-		        dos.write(byteArray, 0, length);
-		    }
-		    
-			final InputStream fromClient = clientSocket.getInputStream();
-		    final DataInputStream dis = new DataInputStream(fromClient);
+			DatagramPacket packet = new DatagramPacket(
+					byteArray, 0, byteArray.length, InetAddress.getByName(clientName), port);
+			socket.send(packet);
 
-		    int len = dis.readInt();
-		    byte[] data = new byte[len];
-		    
-		    if (len > 0) {
-		        dis.read(data, 0, len);
-		    }
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		long endTime = System.currentTimeMillis();
-		
-		return endTime - startTime;
+		return;
 	}
+
 
 }
