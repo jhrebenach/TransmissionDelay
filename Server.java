@@ -81,7 +81,7 @@ public class Server {
 //		    }
 		    
 			int bytes_read;
-			byte[] reply = new byte[length];
+			byte[] reply = new byte[length+100];
 
 //			while ( (bytes_read = fromClient.read(reply)) != -1) {
 				toClient.write(reply, 0, fromClient.read(reply));

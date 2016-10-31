@@ -90,16 +90,9 @@ public class Client {
 		        dis.readFully(data, 0, data.length);
 		    }
 		    
-		    
+		    serverSocketTCP.close();
 			
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			serverSocketTCP.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
