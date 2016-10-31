@@ -77,13 +77,23 @@ public class Client {
 
 			
 
+			long totalTimeAmericanHost = 0;
 			// get RTT to google over TCP
-			System.out.println("RTT for TCP to American (Oregon) host http://www.dogpile.com : " 
-					+ sendBytesToHostTCP(new URL("http://www.dogpile.com").getHost()) + "ms");
+			System.out.println("Conducting 20 trials sending bytes to American host over TCP");
+			for (int i = 0; i < 20; i++) {
+				totalTimeAmericanHost += sendBytesToHostTCP(new URL("http://www.dogpile.com").getHost());
+			}
+			System.out.println("Average RTT for TCP to American (Oregon) host http://www.dogpile.com : " 
+					+ (totalTimeAmericanHost / 20) + "ms");
 			
+			long totalTimeChineseHost = 0;
 			// get RTT to china over TCP
-			System.out.println("RTT for TCP to Chinese host http://www.yangfenzi.com : " 
-					+ sendBytesToHostTCP(new URL("http://www.yangfenzi.com").getHost()) + "ms");			
+			System.out.println("Conducting 20 trials sending bytes to Chinese host over TCP");
+			for (int i = 0; i < 20; i++) {
+				totalTimeChineseHost += sendBytesToHostTCP(new URL("http://www.yangfenzi.com").getHost());
+			}
+			System.out.println("Average RTT for TCP to Chinese host http://www.yangfenzi.com : " 
+					+ (totalTimeChineseHost / 20) + "ms");			
 			
 			
 			
