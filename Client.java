@@ -115,6 +115,7 @@ public class Client {
 			DatagramPacket packet = new DatagramPacket(
 					byteArray, 0, byteArray.length, InetAddress.getByName(serverName), port);
 			socketUDP.send(packet);
+			System.out.println("received packet");
 			
 			// receive response from server and close socket
 			byte[] data = new byte[length];
