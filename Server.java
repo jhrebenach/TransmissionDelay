@@ -34,12 +34,6 @@ public class Server {
 		try {
 			// listen on specified port
 			serverSocket = new ServerSocket(port);
-			
-			fromClient = clientSocket.getInputStream();
-		    dis = new DataInputStream(fromClient);
-		    
-			toClient = clientSocket.getOutputStream();
-		    dos = new DataOutputStream(toClient);
 		    
 			socketUDP = new DatagramSocket(port);
 
@@ -74,6 +68,10 @@ public class Server {
 
 		try {
 			clientSocket = serverSocket.accept();
+			fromClient = clientSocket.getInputStream();
+		    dis = new DataInputStream(fromClient);
+			toClient = clientSocket.getOutputStream();
+		    dos = new DataOutputStream(toClient);
 			// accept sent bytes
 
 //		    int len = dis.readInt();
@@ -89,6 +87,8 @@ public class Server {
 				toClient.write(reply, 0, bytes_read);
 				toClient.flush();
 			}
+			
+			clientSocket.close();
 		    
 		    // return the bytes to client
 //			byte[] byteArray = new byte[length];
