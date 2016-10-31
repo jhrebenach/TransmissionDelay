@@ -75,6 +75,7 @@ public class Client {
 		    
 		    if (length > 0) {
 		        dos.write(byteArray, 0, length);
+		        dos.flush();
 		    }
 		    
 		    // read in response from server and close socket
