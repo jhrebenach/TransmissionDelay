@@ -62,11 +62,11 @@ public class Client {
 			
 			System.out.println("Conducting 1000 trials sending bytes over UDP...");
 			for (int i = 0; i < 1000; i++) {
-				totalTime1byte += sendBytesTCP(1);
-				totalTime10byte += sendBytesTCP(10);
-				totalTime100byte += sendBytesTCP(100);
-				totalTime1000byte += sendBytesTCP(1000);
-				totalTime10000byte += sendBytesTCP(10000);
+				totalTime1byte += sendBytesUDP(1);
+				totalTime10byte += sendBytesUDP(10);
+				totalTime100byte += sendBytesUDP(100);
+				totalTime1000byte += sendBytesUDP(1000);
+				totalTime10000byte += sendBytesUDP(10000);
 			}
 			System.out.println("RTT for UDP 1 byte : " + (totalTime1byte/1000) + "ns");
 			System.out.println("RTT for UDP 10 bytes : " + (totalTime10byte/1000) + "ns");
