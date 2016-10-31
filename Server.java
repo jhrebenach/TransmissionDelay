@@ -97,12 +97,12 @@ public class Server {
 			
 			byte[] data = new byte[length];
 			DatagramPacket receivePacket = new DatagramPacket(data, data.length);
-			socket.receive(receivePacket);
+			socketUDP.receive(receivePacket);
 			
 			byte[] byteArray = new byte[length];
 			DatagramPacket packet = new DatagramPacket(
 					byteArray, 0, byteArray.length, InetAddress.getByName(clientName), port);
-			socket.send(packet);
+			socketUDP.send(packet);
 
 		} catch (IOException e) {
 			e.printStackTrace();
