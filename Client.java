@@ -40,9 +40,13 @@ public class Client {
 			sendBytesUDP(1);
 			Thread.sleep(1000);
 			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(1) + "ns");
+			Thread.sleep(1000);
 			System.out.println("RTT for UDP 10 bytes : " + sendBytesUDP(10) + "ns");
+			Thread.sleep(1000);
 			System.out.println("RTT for UDP 100 bytes : " + sendBytesUDP(100) + "ns");
+			Thread.sleep(1000);
 			System.out.println("RTT for UDP 1000 bytes : " + sendBytesUDP(1000) + "ns");
+			Thread.sleep(1000);
 			System.out.println("RTT for UDP 10000 bytes : " + sendBytesUDP(10000) + "ns");			
 			
 
