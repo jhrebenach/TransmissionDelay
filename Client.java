@@ -35,6 +35,7 @@ public class Client {
 			long totalTime1000byte = 0;
 			long totalTime10000byte = 0;
 			
+			System.out.println("Conducting 1000 trials sending bytes over TCP...");
 			for (int i = 0; i < 1000; i++) {
 				totalTime1byte += sendBytesTCP(1);
 				totalTime10byte += sendBytesTCP(10);
@@ -49,14 +50,29 @@ public class Client {
 			System.out.println("Average RTT for TCP 10000 bytes : " + (totalTime10000byte/1000) + "ns");
 
 			
-			
+
 			// get RTT for various packet sizes to local machine over UDP
 			sendBytesUDP(10000);
-			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(1) + "ns");
-			System.out.println("RTT for UDP 10 bytes : " + sendBytesUDP(10) + "ns");
-			System.out.println("RTT for UDP 100 bytes : " + sendBytesUDP(100) + "ns");
-			System.out.println("RTT for UDP 1000 bytes : " + sendBytesUDP(1000) + "ns");
-			System.out.println("RTT for UDP 10000 bytes : " + sendBytesUDP(10000) + "ns");
+			
+			totalTime1byte = 0;
+			totalTime10byte = 0;
+			totalTime100byte = 0;
+			totalTime1000byte = 0;
+			totalTime10000byte = 0;
+			
+			System.out.println("Conducting 1000 trials sending bytes over UDP...");
+			for (int i = 0; i < 1000; i++) {
+				totalTime1byte += sendBytesTCP(1);
+				totalTime10byte += sendBytesTCP(10);
+				totalTime100byte += sendBytesTCP(100);
+				totalTime1000byte += sendBytesTCP(1000);
+				totalTime10000byte += sendBytesTCP(10000);
+			}
+			System.out.println("RTT for UDP 1 byte : " + (totalTime1byte/1000) + "ns");
+			System.out.println("RTT for UDP 10 bytes : " + (totalTime10byte/1000) + "ns");
+			System.out.println("RTT for UDP 100 bytes : " + (totalTime100byte/1000) + "ns");
+			System.out.println("RTT for UDP 1000 bytes : " + (totalTime1000byte/1000) + "ns");
+			System.out.println("RTT for UDP 10000 bytes : " + (totalTime10000byte/1000) + "ns");
 
 
 			
