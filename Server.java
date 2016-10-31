@@ -34,7 +34,6 @@ public class Server {
 		try {
 			// listen on specified port
 			serverSocket = new ServerSocket(port);
-			clientSocket = serverSocket.accept();
 			
 			fromClient = clientSocket.getInputStream();
 		    dis = new DataInputStream(fromClient);
@@ -74,6 +73,7 @@ public class Server {
 	public static void acceptBytesTCP(int length) {
 
 		try {
+			clientSocket = serverSocket.accept();
 			// accept sent bytes
 
 //		    int len = dis.readInt();
