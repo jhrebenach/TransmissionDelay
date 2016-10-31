@@ -113,7 +113,6 @@ public class Server {
 			byte[] data = new byte[length];
 			DatagramPacket receivePacket = new DatagramPacket(data, data.length);
 			socketUDP.receive(receivePacket);
-			System.out.println("received packet");
 			
 			byte[] byteArray = new byte[length];
 			DatagramPacket packet = new DatagramPacket(
