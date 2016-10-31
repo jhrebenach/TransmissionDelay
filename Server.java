@@ -42,11 +42,11 @@ public class Server {
 			
 			acceptBytesUDP(10000);
 			acceptBytesUDP(1);
-
+			acceptBytesUDP(10);
 			acceptBytesUDP(100);
 			acceptBytesUDP(1000);
 			acceptBytesUDP(10000);
-			acceptBytesUDP(10);
+
 			socketUDP.close();
 			
 			
@@ -67,7 +67,7 @@ public class Server {
 		    
 			// accept sent bytes and return them
 			int bytes_read;
-			byte[] reply = new byte[length];
+			byte[] reply = new byte[1024];
 
 			while ( (bytes_read = fromClient.read(reply)) != -1) {
 				toClient.write(reply, 0, bytes_read);
