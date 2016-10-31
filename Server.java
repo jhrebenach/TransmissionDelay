@@ -31,6 +31,7 @@ public class Server {
 			serverSocket = new ServerSocket(port);
 			socketUDP = new DatagramSocket(port);
 
+			acceptBytesTCP(10000);
 			acceptBytesTCP(1);
 			acceptBytesTCP(10);
 			acceptBytesTCP(100);
@@ -39,6 +40,7 @@ public class Server {
 			
 			serverSocket.close();
 			
+			acceptBytesUDP(10000);
 			acceptBytesUDP(1);
 			acceptBytesUDP(10);
 			acceptBytesUDP(100);
