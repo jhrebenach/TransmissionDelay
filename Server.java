@@ -7,14 +7,9 @@ public class Server {
 	static Integer port = 10000;
 	static DatagramSocket socket;
 	static ServerSocket serverSocket;
-	static Socket clientSocket;
 	static String clientName;
 	static DatagramSocket socketUDP;
-	
-	static InputStream fromClient;
-	static DataInputStream dis;
-	static OutputStream toClient;
-	static DataOutputStream dos;
+
 	
 	public static void main(String... args) {
 		
@@ -34,7 +29,6 @@ public class Server {
 		try {
 			// listen on specified port
 			serverSocket = new ServerSocket(port);
-		    
 			socketUDP = new DatagramSocket(port);
 
 			acceptBytesTCP(1);
@@ -44,10 +38,6 @@ public class Server {
 			acceptBytesTCP(10000);
 			
 			serverSocket.close();
-			clientSocket.close();
-			
-			
-
 			
 			acceptBytesUDP(1);
 			acceptBytesUDP(10);
@@ -67,19 +57,13 @@ public class Server {
 	public static void acceptBytesTCP(int length) {
 
 		try {
-			clientSocket = serverSocket.accept();
-			fromClient = clientSocket.getInputStream();
-		    dis = new DataInputStream(fromClient);
-			toClient = clientSocket.getOutputStream();
-		    dos = new DataOutputStream(toClient);
-			// accept sent bytes
-
-//		    int len = dis.readInt();
-//		    byte[] data = new byte[len];
-//		    if (len > 0) {
-//		        dis.read(data, 0, len);
-//		    }
+			// initialize socket to client and input/output streams
+			Socket clientSocket = serverSocket.accept();
+			InputStream fromClient = clientSocket.getInputStream();
+			OutputStream toClient = clientSocket.getOutputStream();
 		    
+		    
+			// accept sent bytes and return them
 			int bytes_read;
 			byte[] reply = new byte[length];
 
@@ -88,17 +72,9 @@ public class Server {
 				toClient.flush();
 			}
 			
+			// close the socket
 			clientSocket.close();
-		    
-		    // return the bytes to client
-//			byte[] byteArray = new byte[length];
-//		    dos.writeInt(length);
-//		    if (length > 0) {
-//		        dos.write(byteArray, 0, length);
-//		        dos.flush();
-//		    }
-		    
-			
+	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
