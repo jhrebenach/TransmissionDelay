@@ -74,19 +74,27 @@ public class Server {
 		try {
 			// accept sent bytes
 
-		    int len = dis.readInt();
-		    byte[] data = new byte[len];
-		    if (len > 0) {
-		        dis.read(data, 0, len);
-		    }
+//		    int len = dis.readInt();
+//		    byte[] data = new byte[len];
+//		    if (len > 0) {
+//		        dis.read(data, 0, len);
+//		    }
+		    
+			int bytes_read;
+			byte[] reply = new byte[length];
+
+			while ( (bytes_read = fromClient.read(reply)) != -1) {
+				toClient.write(reply, 0, bytes_read);
+				toClient.flush();
+			}
 		    
 		    // return the bytes to client
-			byte[] byteArray = new byte[length];
-		    dos.writeInt(length);
-		    if (length > 0) {
-		        dos.write(byteArray, 0, length);
-		        dos.flush();
-		    }
+//			byte[] byteArray = new byte[length];
+//		    dos.writeInt(length);
+//		    if (length > 0) {
+//		        dos.write(byteArray, 0, length);
+//		        dos.flush();
+//		    }
 		    
 			
 		} catch (IOException e) {

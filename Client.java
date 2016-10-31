@@ -69,24 +69,25 @@ public class Client {
 			Socket serverSocketTCP = new Socket(serverName, port);
 			byte[] byteArray = new byte[length];
 			final OutputStream toClient = serverSocketTCP.getOutputStream();
-	
 		    final DataOutputStream dos = new DataOutputStream(toClient);
-		    dos.writeInt(length);
 		    
-		    if (length > 0) {
-		        dos.write(byteArray, 0, length);
-		        dos.flush();
-		    }
+		    dos.writeInt(byteArray.length);
+		    dos.write(byteArray);
 		    
+//		    if (length > 0) {
+//		        dos.write(byteArray, 0, length);
+//		        dos.flush();
+//		    }
+			
 		    // read in response from server and close socket
 			final InputStream fromServer = serverSocketTCP.getInputStream();
 		    final DataInputStream dis = new DataInputStream(fromServer);
 
 		    int len = dis.readInt();
-		    byte[] data = new byte[len];
 		    
+		    byte[] data = new byte[len];
 		    if (len > 0) {
-		        dis.read(data, 0, len);
+		        dis.readFully(data, 0, data.length);
 		    }
 		    
 		    serverSocketTCP.close();
