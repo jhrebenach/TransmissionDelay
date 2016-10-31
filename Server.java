@@ -42,11 +42,11 @@ public class Server {
 			
 			acceptBytesUDP(10000);
 			acceptBytesUDP(1);
-			acceptBytesUDP(10);
+
 			acceptBytesUDP(100);
 			acceptBytesUDP(1000);
 			acceptBytesUDP(10000);
-			
+			acceptBytesUDP(10);
 			socketUDP.close();
 			
 			
