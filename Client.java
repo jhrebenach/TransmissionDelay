@@ -27,7 +27,6 @@ public class Client {
 		try {
 
 			// get RTT for various packet sizes to local machine over TCP
-			sendBytesTCP(100);
 			System.out.println("RTT for TCP 1 byte : " + sendBytesTCP(1) + "ns");
 			System.out.println("RTT for TCP 10 bytes : " + sendBytesTCP(10) + "ns");
 			System.out.println("RTT for TCP 100 bytes : " + sendBytesTCP(100) + "ns");
@@ -67,9 +66,10 @@ public class Client {
 		
 		try {
 			
-			// establish connection to server and send length bytes
+			// open our socket in exterior try/catch (so we will certainly close it if opened)
 			serverSocketTCP = new Socket(serverName, port);
 			
+			// establish connection to server and send length bytes
 			try {
 				byte[] byteArray = new byte[length];
 				final OutputStream toClient = serverSocketTCP.getOutputStream();
@@ -77,11 +77,7 @@ public class Client {
 			    
 			    dos.writeInt(byteArray.length);
 			    dos.write(byteArray);
-			    
-	//		    if (length > 0) {
-	//		        dos.write(byteArray, 0, length);
-	//		        dos.flush();
-	//		    }
+
 				
 			    // read in response from server and close socket
 				final InputStream fromServer = serverSocketTCP.getInputStream();
@@ -97,6 +93,7 @@ public class Client {
 		    	e.printStackTrace();
 		    }
 		    
+			// since we always must close our socket, use separate try/catch
 		    serverSocketTCP.close();
 			
 		} catch (Exception e) {
@@ -161,12 +158,9 @@ public class Client {
 		    }
 		    
 		    // read in response from server and close socket
-
 			final InputStream fromServer = serverSocketTCP.getInputStream();
-//		    final DataInputStream dis = new DataInputStream(fromServer);
 			byte[] reply = new byte[length];
 			fromServer.read(reply);
-		    
 		    serverSocketTCP.close();
 			
 		} catch (IOException e) {
