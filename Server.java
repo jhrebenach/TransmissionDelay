@@ -11,6 +11,11 @@ public class Server {
 	static String clientName;
 	static DatagramSocket socketUDP;
 	
+	static InputStream fromClient;
+	static DataInputStream dis;
+	static OutputStream toClient;
+	static DataOutputStream dos;
+	
 	public static void main(String... args) {
 		
 		// read server name, catch if there is no specified server
@@ -30,6 +35,12 @@ public class Server {
 			// listen on specified port
 			serverSocket = new ServerSocket(port);
 			clientSocket = serverSocket.accept();
+			
+			fromClient = clientSocket.getInputStream();
+		    dis = new DataInputStream(fromClient);
+		    
+			toClient = clientSocket.getOutputStream();
+		    dos = new DataOutputStream(toClient);
 
 			acceptBytesTCP(1);
 			acceptBytesTCP(10);
@@ -62,8 +73,6 @@ public class Server {
 
 		try {
 			// accept sent bytes
-			final InputStream fromClient = clientSocket.getInputStream();
-		    final DataInputStream dis = new DataInputStream(fromClient);
 
 		    int len = dis.readInt();
 		    byte[] data = new byte[len];
@@ -74,9 +83,7 @@ public class Server {
 		    
 		    // return the bytes to client
 			byte[] byteArray = new byte[length];
-			final OutputStream toClient = clientSocket.getOutputStream();
-	
-		    final DataOutputStream dos = new DataOutputStream(toClient);
+
 		    dos.writeInt(length);
 		    
 		    if (length > 0) {
