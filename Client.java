@@ -28,11 +28,25 @@ public class Client {
 
 			// get RTT for various packet sizes to local machine over TCP
 			sendBytesTCP(10000);	
-			System.out.println("RTT for TCP 1 byte : " + sendBytesTCP(1) + "ns");			
-			System.out.println("RTT for TCP 10 bytes : " + sendBytesTCP(10) + "ns");
-			System.out.println("RTT for TCP 100 bytes : " + sendBytesTCP(100) + "ns");
-			System.out.println("RTT for TCP 1000 bytes : " + sendBytesTCP(1000) + "ns");
-			System.out.println("RTT for TCP 10000 bytes : " + sendBytesTCP(10000) + "ns");
+			
+			long totalTime1byte = 0;
+			long totalTime10byte = 0;
+			long totalTime100byte = 0;
+			long totalTime1000byte = 0;
+			long totalTime10000byte = 0;
+			
+			for (int i = 0; i < 1000; i++) {
+				totalTime1byte += sendBytesTCP(1);
+				totalTime10byte += sendBytesTCP(10);
+				totalTime100byte += sendBytesTCP(100);
+				totalTime1000byte += sendBytesTCP(1000);
+				totalTime10000byte += sendBytesTCP(10000);
+			}
+			System.out.println("Average RTT for TCP 1 byte : " + (totalTime1byte/1000) + "ns");			
+			System.out.println("Average RTT for TCP 10 bytes : " + (totalTime10byte/1000) + "ns");
+			System.out.println("Average RTT for TCP 100 bytes : " + (totalTime100byte/1000) + "ns");
+			System.out.println("Average RTT for TCP 1000 bytes : " + (totalTime1000byte/1000) + "ns");
+			System.out.println("Average RTT for TCP 10000 bytes : " + (totalTime10000byte/1000) + "ns");
 
 			
 			
