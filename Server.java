@@ -32,11 +32,13 @@ public class Server {
 			socketUDP = new DatagramSocket(port);
 
 			acceptBytesTCP(10000);
-			acceptBytesTCP(1);
-			acceptBytesTCP(10);
-			acceptBytesTCP(100);
-			acceptBytesTCP(1000);
-			acceptBytesTCP(10000);
+			for (int i = 0; i < 1000; i++) {
+				acceptBytesTCP(1);
+				acceptBytesTCP(10);
+				acceptBytesTCP(100);
+				acceptBytesTCP(1000);
+				acceptBytesTCP(10000);
+			}
 			
 			serverSocket.close();
 			
