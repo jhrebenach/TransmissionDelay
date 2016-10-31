@@ -41,6 +41,8 @@ public class Server {
 		    
 			toClient = clientSocket.getOutputStream();
 		    dos = new DataOutputStream(toClient);
+		    
+			socketUDP = new DatagramSocket(port);
 
 			acceptBytesTCP(1);
 			acceptBytesTCP(10);
@@ -52,7 +54,7 @@ public class Server {
 			clientSocket.close();
 			
 			
-			socketUDP = new DatagramSocket(port);
+
 			
 			acceptBytesUDP(1);
 			acceptBytesUDP(10);
