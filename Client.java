@@ -28,20 +28,22 @@ public class Client {
 
 			// get RTT for various packet sizes to local machine over TCP
 			sendBytesTCP(10000);	
-			System.out.println("RTT for TCP 1 byte : " + sendBytesTCP(1) + "ns");
+			
 			System.out.println("RTT for TCP 10 bytes : " + sendBytesTCP(10) + "ns");
 			System.out.println("RTT for TCP 100 bytes : " + sendBytesTCP(100) + "ns");
 			System.out.println("RTT for TCP 1000 bytes : " + sendBytesTCP(1000) + "ns");
 			System.out.println("RTT for TCP 10000 bytes : " + sendBytesTCP(10000) + "ns");
+			System.out.println("RTT for TCP 1 byte : " + sendBytesTCP(1) + "ns");
 			
 			
 			// get RTT for various packet sizes to local machine over UDP
 			sendBytesUDP(10000);
-			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(1) + "ns");
+
 			System.out.println("RTT for UDP 10 bytes : " + sendBytesUDP(10) + "ns");
 			System.out.println("RTT for UDP 100 bytes : " + sendBytesUDP(100) + "ns");
 			System.out.println("RTT for UDP 1000 bytes : " + sendBytesUDP(1000) + "ns");
-			System.out.println("RTT for UDP 10000 bytes : " + sendBytesUDP(10000) + "ns");			
+			System.out.println("RTT for UDP 10000 bytes : " + sendBytesUDP(10000) + "ns");
+			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(1) + "ns");
 			
 
 			// get RTT to google over TCP
