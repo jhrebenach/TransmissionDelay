@@ -35,7 +35,7 @@ public class Client {
 			
 			
 			// get RTT for various packet sizes to local machine over UDP
-			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(10000) + "ms");
+			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(1) + "ms");
 			System.out.println("RTT for UDP 10 bytes : " + sendBytesUDP(10) + "ms");
 			System.out.println("RTT for UDP 100 bytes : " + sendBytesUDP(100) + "ms");
 			System.out.println("RTT for UDP 1000 bytes : " + sendBytesUDP(1000) + "ms");
@@ -62,40 +62,46 @@ public class Client {
 		
 		// measure elapsed time of process
 		long startTime = System.currentTimeMillis();
+		Socket serverSocketTCP;
 		
 		try {
 			
 			// establish connection to server and send length bytes
-			Socket serverSocketTCP = new Socket(serverName, port);
-			byte[] byteArray = new byte[length];
-			final OutputStream toClient = serverSocketTCP.getOutputStream();
-		    final DataOutputStream dos = new DataOutputStream(toClient);
-		    
-		    dos.writeInt(byteArray.length);
-		    dos.write(byteArray);
-		    
-//		    if (length > 0) {
-//		        dos.write(byteArray, 0, length);
-//		        dos.flush();
-//		    }
+			serverSocketTCP = new Socket(serverName, port);
 			
-		    // read in response from server and close socket
-			final InputStream fromServer = serverSocketTCP.getInputStream();
-		    final DataInputStream dis = new DataInputStream(fromServer);
-
-		    int len = dis.readInt();
-		    
-		    byte[] data = new byte[len];
-		    if (len > 0) {
-		        dis.readFully(data, 0, data.length);
+			try {
+				byte[] byteArray = new byte[length];
+				final OutputStream toClient = serverSocketTCP.getOutputStream();
+			    final DataOutputStream dos = new DataOutputStream(toClient);
+			    
+			    dos.writeInt(byteArray.length);
+			    dos.write(byteArray);
+			    
+	//		    if (length > 0) {
+	//		        dos.write(byteArray, 0, length);
+	//		        dos.flush();
+	//		    }
+				
+			    // read in response from server and close socket
+				final InputStream fromServer = serverSocketTCP.getInputStream();
+			    final DataInputStream dis = new DataInputStream(fromServer);
+	
+			    int len = dis.readInt();
+			    
+			    byte[] data = new byte[len];
+			    if (len > 0) {
+			        dis.readFully(data, 0, data.length);
+			    }
+			} catch (Exception e) {
+		    	e.printStackTrace();
 		    }
 		    
 		    serverSocketTCP.close();
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		long endTime = System.currentTimeMillis();
 		
 		return endTime - startTime;
