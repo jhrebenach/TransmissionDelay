@@ -83,10 +83,10 @@ public class Server {
 			int bytes_read;
 			byte[] reply = new byte[length];
 
-			while ( (bytes_read = fromClient.read(reply)) != -1) {
-				toClient.write(reply, 0, bytes_read);
+//			while ( (bytes_read = fromClient.read(reply)) != -1) {
+				toClient.write(reply, 0, fromClient.read(reply));
 				toClient.flush();
-			}
+//			}
 		    
 		    // return the bytes to client
 //			byte[] byteArray = new byte[length];
