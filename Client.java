@@ -27,8 +27,6 @@ public class Client {
 		try {
 
 			// get RTT for various packet sizes to local machine over TCP
-			sendBytesTCP(1);
-			Thread.sleep(1000);
 			System.out.println("RTT for TCP 1 byte : " + sendBytesTCP(1) + "ns");
 			System.out.println("RTT for TCP 10 bytes : " + sendBytesTCP(10) + "ns");
 			System.out.println("RTT for TCP 100 bytes : " + sendBytesTCP(100) + "ns");
