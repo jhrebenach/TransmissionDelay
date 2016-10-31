@@ -35,11 +35,11 @@ public class Client {
 			
 			
 			// get RTT for various packet sizes to local machine over UDP
-			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(1) + "ms");
-			System.out.println("RTT for UDP 10 bytes : " + sendBytesUDP(10) + "ms");
-			System.out.println("RTT for UDP 100 bytes : " + sendBytesUDP(100) + "ms");
-			System.out.println("RTT for UDP 1000 bytes : " + sendBytesUDP(1000) + "ms");
-			System.out.println("RTT for UDP 10000 bytes : " + sendBytesUDP(10000) + "ms");			
+			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(1) + "ns");
+			System.out.println("RTT for UDP 10 bytes : " + sendBytesUDP(10) + "ns");
+			System.out.println("RTT for UDP 100 bytes : " + sendBytesUDP(100) + "ns");
+			System.out.println("RTT for UDP 1000 bytes : " + sendBytesUDP(1000) + "ns");
+			System.out.println("RTT for UDP 10000 bytes : " + sendBytesUDP(10000) + "ns");			
 			
 
 			// get RTT to google over TCP
@@ -109,7 +109,7 @@ public class Client {
 	public static long sendBytesUDP(int length) {
 		
 		// measure elapsed time
-		long startTime = System.currentTimeMillis();
+		long startTime = System.nanoTime();
 		
 		try {
 
@@ -130,7 +130,7 @@ public class Client {
 			e.printStackTrace();
 		}
 		
-		long endTime = System.currentTimeMillis();
+		long endTime = System.nanoTime();
 		
 		return endTime - startTime;
 	}
