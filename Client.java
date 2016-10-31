@@ -37,7 +37,7 @@ public class Client {
 			
 			
 			// get RTT for various packet sizes to local machine over UDP
-			sendBytesUDP(1);
+			sendBytesUDP(10000);
 			Thread.sleep(1000);
 			System.out.println("RTT for UDP 1 byte : " + sendBytesUDP(1) + "ns");
 			Thread.sleep(1000);
