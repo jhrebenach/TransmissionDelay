@@ -27,11 +27,12 @@ public class Client {
 		try {
 
 			// get RTT for various packet sizes to local machine over TCP
-			System.out.println("RTT for TCP 1 byte : " + sendBytesTCP(1) + "ms");
-			System.out.println("RTT for TCP 10 bytes : " + sendBytesTCP(10) + "ms");
-			System.out.println("RTT for TCP 100 bytes : " + sendBytesTCP(100) + "ms");
-			System.out.println("RTT for TCP 1000 bytes : " + sendBytesTCP(1000) + "ms");
-			System.out.println("RTT for TCP 10000 bytes : " + sendBytesTCP(10000) + "ms");
+			sendBytesTCP(100);
+			System.out.println("RTT for TCP 1 byte : " + sendBytesTCP(1) + "ns");
+			System.out.println("RTT for TCP 10 bytes : " + sendBytesTCP(10) + "ns");
+			System.out.println("RTT for TCP 100 bytes : " + sendBytesTCP(100) + "ns");
+			System.out.println("RTT for TCP 1000 bytes : " + sendBytesTCP(1000) + "ns");
+			System.out.println("RTT for TCP 10000 bytes : " + sendBytesTCP(10000) + "ns");
 			
 			
 			// get RTT for various packet sizes to local machine over UDP
@@ -61,7 +62,7 @@ public class Client {
 	public static long sendBytesTCP(int length) {
 		
 		// measure elapsed time of process
-		long startTime = System.currentTimeMillis();
+		long startTime = System.nanoTime();
 		Socket serverSocketTCP;
 		
 		try {
@@ -102,7 +103,7 @@ public class Client {
 			e.printStackTrace();
 		}
 
-		long endTime = System.currentTimeMillis();
+		long endTime = System.nanoTime();
 		
 		return endTime - startTime;
 	}
